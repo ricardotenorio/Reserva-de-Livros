@@ -3,7 +3,9 @@ package ricardotenorio.reserva.de.livros.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Cliente extends Entidade {
@@ -12,6 +14,9 @@ public class Cliente extends Entidade {
     private String sobrenome;
     private String cpf;
     private String senha;
+
+    @OneToMany(mappedBy = "cliente")
+    private Set<Reserva> reservas;
 
     public Cliente() {}
 

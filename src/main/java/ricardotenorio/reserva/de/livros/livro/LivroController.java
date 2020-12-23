@@ -5,6 +5,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ricardotenorio.reserva.de.livros.entity.LivroEstado;
 import ricardotenorio.reserva.de.livros.entity.Livro;
 import ricardotenorio.reserva.de.livros.exception.ResourceNotFoundException;
 
@@ -36,6 +37,7 @@ public class LivroController {
 
     @PostMapping("/livros")
     ResponseEntity<?> create(@RequestBody Livro livro) {
+        livro.setEstado(LivroEstado.DISPONIVEL);
         EntityModel<Livro> entityModel = assembler.toModel(repository.save(livro));
 
         return ResponseEntity
@@ -59,6 +61,7 @@ public class LivroController {
                     oldLivro.setCategoria(livro.getCategoria());
                     oldLivro.setIsbn(livro.getIsbn());
                     oldLivro.setNumeroPaginas(livro.getNumeroPaginas());
+                    oldLivro.setEstado(livro.getEstado());
                     return repository.save(livro);
                 })
                 .orElseGet(() -> {
