@@ -5,6 +5,8 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import ricardotenorio.reserva.de.livros.entity.Livro;
+import ricardotenorio.reserva.de.livros.exception.ResourceNotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +35,7 @@ public class LivroController {
     }
 
     @PostMapping("/livros")
-    ResponseEntity<?> newLivro(@RequestBody Livro livro) {
+    ResponseEntity<?> create(@RequestBody Livro livro) {
         EntityModel<Livro> entityModel = assembler.toModel(repository.save(livro));
 
         return ResponseEntity
@@ -44,12 +46,12 @@ public class LivroController {
     @GetMapping("/livros/{id}")
     EntityModel<Livro> one(@PathVariable Long id) {
         Livro livro = repository.findById(id)
-                .orElseThrow(() -> new LivroNotFoundException(id));
+                .orElseThrow(() -> new ResourceNotFoundException("livro", id));
         return assembler.toModel(livro);
     }
 
     @PutMapping("/livros/{id}")
-    ResponseEntity<?> replaceLivro(@RequestBody Livro livro, @PathVariable Long id) {
+    ResponseEntity<?> replace(@RequestBody Livro livro, @PathVariable Long id) {
         Livro updatedLivro = repository.findById(id)
                 .map(oldLivro -> {
                     oldLivro.setTitulo(livro.getTitulo());
@@ -71,7 +73,7 @@ public class LivroController {
     }
 
     @DeleteMapping("/livros/{id}")
-    ResponseEntity<?> deleteLivro(@PathVariable Long id) {
+    ResponseEntity<?> delete(@PathVariable Long id) {
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

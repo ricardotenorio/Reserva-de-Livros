@@ -1,4 +1,4 @@
-package ricardotenorio.reserva.de.livros.livro;
+package ricardotenorio.reserva.de.livros.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -6,7 +6,7 @@ import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
-public class Livro {
+public class Livro extends Entidade {
     private @Id @GeneratedValue Long id;
     private String titulo;
     private String autor;

@@ -1,17 +1,18 @@
-package ricardotenorio.reserva.de.livros.livro;
+package ricardotenorio.reserva.de.livros.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import ricardotenorio.reserva.de.livros.exception.ResourceNotFoundException;
 
 @ControllerAdvice
-public class LivroNotFoundAdvice {
+public class ResourceNotFoundAdvice {
     @ResponseBody
-    @ExceptionHandler(LivroNotFoundException.class)
+    @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String livroNotFoundHandler(LivroNotFoundException e) {
+    String resourceNotFoundHandler(ResourceNotFoundException e) {
         return e.getMessage();
     }
 }
