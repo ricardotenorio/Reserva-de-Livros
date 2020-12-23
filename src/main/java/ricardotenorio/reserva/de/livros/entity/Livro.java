@@ -22,9 +22,8 @@ public class Livro extends Entidade {
 
     public Livro() {}
 
-    public Livro(Long id, String titulo, String autor,
+    public Livro(String titulo, String autor,
                  String categoria, String isbn, int numeroPaginas, LivroEstado livroEstado) {
-        this.id = id;
         this.titulo = titulo;
         this.autor = autor;
         this.categoria = categoria;

@@ -25,11 +25,14 @@ public class Reserva extends Entidade {
 
     private ReservaEstado reservaEstado;
 
-    public Reserva() {
+    public Reserva() {}
+
+    public Reserva(Livro livro, Cliente cliente) {
+        this.livro = livro;
+        this.cliente = cliente;
     }
 
-    public Reserva(Long id, Livro livro, Cliente cliente, Date feitaEm, Date terminaEm, ReservaEstado reservaEstado) {
-        this.id = id;
+    public Reserva(Livro livro, Cliente cliente, Date feitaEm, Date terminaEm, ReservaEstado reservaEstado) {
         this.livro = livro;
         this.cliente = cliente;
         this.feitaEm = feitaEm;

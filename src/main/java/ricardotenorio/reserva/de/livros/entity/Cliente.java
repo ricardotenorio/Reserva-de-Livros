@@ -20,8 +20,7 @@ public class Cliente extends Entidade {
 
     public Cliente() {}
 
-    public Cliente(Long id, String nome, String sobrenome, String cpf, String senha) {
-        this.id = id;
+    public Cliente(String nome, String sobrenome, String cpf, String senha) {
         this.nome = nome;
         this.sobrenome = sobrenome;
         this.cpf = cpf;
