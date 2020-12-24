@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ControllerAdvice
-public class ResourceNotFoundAdvice {
+public class ClienteInvalidoAdvice {
     @ResponseBody
-    @ExceptionHandler(ResourceNotFoundException.class)
+    @ExceptionHandler(ClienteInvalidoException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String resourceNotFoundHandler(ResourceNotFoundException e) {
+    String clienteInvalidoHandler(ClienteInvalidoException e) {
         return e.getMessage();
     }
 }

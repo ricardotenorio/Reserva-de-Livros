@@ -1,9 +1,8 @@
 package ricardotenorio.reserva.de.livros.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,6 +13,11 @@ public class Cliente extends Entidade {
     private String sobrenome;
     private String cpf;
     private String senha;
+
+    @OneToOne
+    @JoinColumn(name = "token_id", referencedColumnName = "id")
+    @JsonIgnoreProperties("cliente")
+    private Token token;
 
     @OneToMany(mappedBy = "cliente")
     private Set<Reserva> reservas;
@@ -65,6 +69,14 @@ public class Cliente extends Entidade {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public Token getToken() {
+        return token;
+    }
+
+    public void setToken(Token token) {
+        this.token = token;
     }
 
     @Override

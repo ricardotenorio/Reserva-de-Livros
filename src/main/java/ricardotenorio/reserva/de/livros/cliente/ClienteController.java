@@ -6,7 +6,11 @@ import org.springframework.hateoas.IanaLinkRelations;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ricardotenorio.reserva.de.livros.entity.Cliente;
+import ricardotenorio.reserva.de.livros.entity.Token;
+import ricardotenorio.reserva.de.livros.exception.ClienteInvalidoException;
 import ricardotenorio.reserva.de.livros.exception.ResourceNotFoundException;
+import ricardotenorio.reserva.de.livros.util.TokenRepository;
+import ricardotenorio.reserva.de.livros.util.UserToken;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,10 +21,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RestController
 public class ClienteController {
     private final ClienteRepository repository;
+    private final UserToken userToken;
     private final ClienteModelAssembler assembler;
 
-    public ClienteController(ClienteRepository repository, ClienteModelAssembler assembler) {
+    public ClienteController(ClienteRepository repository, UserToken userToken, ClienteModelAssembler assembler) {
         this.repository = repository;
+        this.userToken = userToken;
         this.assembler = assembler;
     }
 
@@ -41,6 +47,16 @@ public class ClienteController {
         return ResponseEntity
                 .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri())
                 .body(entityModel);
+    }
+
+    @PostMapping("/clientes/login")
+    String login(@RequestBody Cliente cliente) throws ClienteInvalidoException {
+        try {
+            Cliente authCliente = repository.findByCpfAndSenha(cliente.getCpf(), cliente.getSenha());
+            return userToken.generateToken(authCliente);
+        } catch (Exception e) {
+            throw new ClienteInvalidoException();
+        }
     }
 
     @GetMapping("/clientes/{id}")
